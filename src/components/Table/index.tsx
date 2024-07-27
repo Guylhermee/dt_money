@@ -1,35 +1,41 @@
+import React from 'react';
 import Image from "next/image";
+import { OperationType, TransactionModel } from "@/mocks/transactionModel";
 
-export function Table() {
-    const transactions = [
-        { title: 'Desenvolvimento de site', price: 'R$ 12.000,00', category: 'Venda', date: '13/04/2021' },
-        { title: 'Hamburguer', price: '- R$ 59,00', category: 'Alimentação', date: '10/04/2021' },
-        { title: 'Aluguel do apartamento', price: '- R$ 1.200,00', category: 'Casa', date: '27/03/2021' },
-        { title: 'Computador', price: 'R$ 5.400,00', category: 'Venda', date: '15/03/2021' },
-    ];
-
-    return <div className="mt-6">
-        <table className="w-full table-auto">
-            <thead>
-                <tr className="text-gray-400 text-left">
-                    <th className="font-normal py-4 px-6">Título</th>
-                    <th className="font-normal py-4 px-6">Preço</th>
-                    <th className="font-normal py-4 px-6">Categoria</th>
-                    <th className="font-normal py-4 px-6">Data</th>
-                </tr>
-            </thead>
-            <tbody>
-                {transactions.map((transaction, index) => (
-                    <tr key={index} className="bg-white rounded-lg shadow-md mb-4">
-                        <td className="py-4 px-6">{transaction.title}</td>
-                        <td className={`py-4 px-6 ${transaction.price.includes('-') ? 'text-red-600' : 'text-green-600'}`}>
-                            {transaction.price}
-                        </td>
-                        <td className="py-4 px-6">{transaction.category}</td>
-                        <td className="py-4 px-6">{transaction.date}</td>
-                    </tr>
-                ))}
-            </tbody>
-        </table>
-    </div>
+export interface TableProps {
+    transactions: TransactionModel[];
 }
+
+const Table: React.FC<TableProps> = ({ transactions }) => {
+    return (
+        <div className="overflow-x-auto mx-auto max-w-[1120px] pt-8">
+            <table className="min-w-full">
+                <thead>
+                    <tr>
+                        <th className="w-1/2 px-8 py-4 text-left text-s leading-normal font-light text-gray-400 tracking-wider">Título</th>
+                        <th className="w-1/6 px-8 py-4 text-left text-s leading-normal font-light text-gray-400 tracking-wider">Preço</th>
+                        <th className="w-1/4 px-8 py-4 text-left text-s leading-normal font-light text-gray-400 tracking-wider">Categoria</th>
+                        <th className="w-1/6 px-8 py-4 text-left text-s leading-normal font-light text-gray-400 tracking-wider">Data</th>
+                    </tr>
+                </thead>
+                <tbody className="bg-white divide-y-8 divide-gray-100">
+                    {transactions.map((transaction) => (
+                        <tr key={transaction.id}>
+                            <td className="px-8 py-4 whitespace-nowrap font-light">{transaction.title}</td>
+                            <td className={`px-8 py-4 whitespace-nowrap font-light ${transaction.type == OperationType.debit ? "text-red before:content-['-']" : 'text-green'}`}>
+                                R$ {transaction.price.toLocaleString('pt-BR', {
+                                    minimumFractionDigits: 2,
+                                    maximumFractionDigits: 2
+                                })}
+                            </td>
+                            <td className="px-8 py-4 whitespace-nowrap text-gray-400 font-light">{transaction.category?.name}</td>
+                            <td className="px-8 py-4 whitespace-nowrap text-gray-400 font-light">{transaction.date}</td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
+        </div>
+    );
+};
+
+export default Table;
