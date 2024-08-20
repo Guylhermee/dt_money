@@ -1,18 +1,14 @@
 'use client'
 
 import Image from "next/image";
-
 import { FC, useState } from "react";
-import { CategoryModel } from "@/mocks/categoryModel";
-import { TransactionModel } from "@/mocks/transactionModel";
-import TransactionDialog from "../Dialog";
+import TransactionDialog from "@/components/Dialog";
 
 interface HeaderProps {
-    categories: CategoryModel[]
-    handleSubmit: (transaction: TransactionModel) => void;
+    isUpdate: boolean;
 }
 
-export const Header: FC<HeaderProps> = ({ categories, handleSubmit }) => {
+export const Header: FC<HeaderProps> = ({isUpdate = false}) => {
     const [isDialogOpen, setIsDialogOpen] = useState(false);
 
     return (
@@ -23,8 +19,7 @@ export const Header: FC<HeaderProps> = ({ categories, handleSubmit }) => {
                     className="bg-lighter-purple text-white size-4 w-[197px] px-5 py-6 rounded-md flex items-center justify-center hover:opacity-90"
                     onClick={() => setIsDialogOpen(true)}>Nova Transação
                 </button>
-                <TransactionDialog isOpen={isDialogOpen} onClose={() => setIsDialogOpen(false)}
-                    categories={categories} handleSubmit={handleSubmit} />
+                <TransactionDialog isOpen={isDialogOpen} onClose={() => setIsDialogOpen(false)} transactionId={null}/>
             </div>
         </header>
     );
