@@ -1,12 +1,11 @@
-import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import "./globals.css";
+import React from "react";
+import {QueryClient, QueryClientProvider} from "react-query";
 
-const poppins = Poppins({ subsets: ["latin"], weight: ["900", "700"]});
+const queryClient = new QueryClient()
 
-export const metadata: Metadata = {
-  title: "dt Money"
-};
+const poppins = Poppins({subsets: ["latin"], weight: ["400", "500", "600", "700", "900"]});
 
 export default function RootLayout({
   children,
@@ -15,7 +14,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={poppins.className}>{children}</body>
+      <body className={poppins.className}>
+        <QueryClientProvider client={queryClient}>
+            {children}
+        </QueryClientProvider>
+      </body>
     </html>
   );
 }
