@@ -1,6 +1,7 @@
-import React, {useState} from 'react';
-import {PencilSquareIcon, TrashIcon} from "@heroicons/react/24/outline";
+'use client'
 
+import React, {useState} from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {TransactionModel} from "@/models/transactionModel";
 import {TransactionType} from "@/models/transactionEnums";
 import TransactionDialog from "@/components/Dialog";
@@ -53,10 +54,10 @@ const Table: React.FC<TableProps> = ({ transactions }) => {
                             <td className="px-8 py-4 whitespace-nowrap text-gray-400 font-light">{transaction.date}</td>
                         <td className="px-8 py-4 flex items-center justify-center gap-4">
                             <button onClick={() => handleUpdate(transaction.id)}>
-                                <PencilSquareIcon className="h-6 w-6" color="grey"></PencilSquareIcon>
+                                <FontAwesomeIcon icon="fa-solid fa-pencil" className="h-6 w-6" color="grey"/> 
                             </button>
                             <button onClick={() => handleDelete(transaction.id)}>
-                                <TrashIcon className="h-6 w-6" color="grey"></TrashIcon>
+                                <FontAwesomeIcon icon="fa-solid fa-trash" className="h-6 w-6" color="grey"/>
                             </button>
                         </td>
                     </tr>
